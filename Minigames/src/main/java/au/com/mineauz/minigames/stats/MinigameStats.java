@@ -12,7 +12,6 @@ import au.com.mineauz.minigames.menu.Menu;
 import au.com.mineauz.minigames.menu.MenuItemBack;
 import au.com.mineauz.minigames.menu.MenuItemCustom;
 
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 
 /**

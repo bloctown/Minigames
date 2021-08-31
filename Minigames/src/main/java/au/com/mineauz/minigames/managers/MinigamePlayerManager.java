@@ -951,14 +951,4 @@ public class MinigamePlayerManager {
         setDeniedCommands(plugin.getConfig().getStringList("disabledCommands"));
     }
 
-    private class PlayerLocation {
-        final Location location;
-        final Integer position;
-
-        public PlayerLocation(int pos) {
-            location = null;
-            this.position = pos;
-        }
-    }
-
 }

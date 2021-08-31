@@ -16,6 +16,9 @@ import au.com.mineauz.minigames.minigame.modules.WeatherTimeModule;
 import au.com.mineauz.minigames.objects.MinigamePlayer;
 import au.com.mineauz.minigames.objects.OfflineMinigamePlayer;
 import au.com.mineauz.minigames.tool.MinigameTool;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -89,8 +92,8 @@ public class Events implements Listener {
                 event.getDrops().clear();
             }
             String msg = "";
-            msg = event.getDeathMessage();
-            event.setDeathMessage(null);
+            msg = LegacyComponentSerializer.legacyAmpersand().serialize(event.deathMessage());
+            event.deathMessage(Component.empty());
             event.setDroppedExp(0);
 
             ply.addDeath();

@@ -1,6 +1,7 @@
 package au.com.mineauz.minigames.blockRecorder;
 
 import au.com.mineauz.minigames.objects.MinigamePlayer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import au.com.mineauz.minigames.managers.MinigamePlayerManager;
 import au.com.mineauz.minigames.Minigames;
 import au.com.mineauz.minigames.minigame.Minigame;
@@ -51,7 +52,7 @@ public class BasicRecorder implements Listener {
                     mgm.canBlockBreak()) {
                 if (event.getBlock().getState() instanceof Sign) {
                     Sign sign = (Sign) event.getBlock().getState();
-                    if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_BLUE + "[Minigame]")) {
+                    if (LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(0)).equalsIgnoreCase(ChatColor.DARK_BLUE + "[Minigame]")) {
                         event.setCancelled(true);
                     } else {
                         d.addBlock(event.getBlock(), ply);

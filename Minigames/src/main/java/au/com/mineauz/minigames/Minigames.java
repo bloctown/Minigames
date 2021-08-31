@@ -6,9 +6,7 @@ import au.com.mineauz.minigames.managers.MinigameManager;
 import au.com.mineauz.minigames.managers.MinigamePlayerManager;
 import au.com.mineauz.minigames.managers.PlaceHolderManager;
 import au.com.mineauz.minigames.managers.ResourcePackManager;
-import au.com.mineauz.minigames.minigame.modules.MinigameModule;
 import au.com.mineauz.minigames.objects.MinigamePlayer;
-import au.com.mineauz.minigames.objects.ModulePlaceHolderProvider;
 import au.com.mineauz.minigames.objects.ResourcePack;
 import com.google.common.io.Closeables;
 import com.google.common.util.concurrent.FutureCallback;
@@ -49,12 +47,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.lang.reflect.Member;
-import java.time.LocalDate;
 import java.util.*;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
@@ -507,9 +501,6 @@ public class Minigames extends JavaPlugin {
     @Deprecated
     public FileConfiguration getLang() {
         return null;
-    }
-
-    private void loadLang() {
     }
 
     public void queueStatSave(final StoredGameStats saveData, final boolean winner) {

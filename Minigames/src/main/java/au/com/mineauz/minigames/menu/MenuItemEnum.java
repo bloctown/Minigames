@@ -12,9 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
-import au.com.mineauz.minigames.menu.Callback;
-import au.com.mineauz.minigames.menu.MenuItem;
-
 public class MenuItemEnum<T extends Enum<T>> extends MenuItem {
     private final List<String> baseDescription;
     private final List<T> enumList;

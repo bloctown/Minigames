@@ -17,10 +17,8 @@ import be.seeseemelk.mockbukkit.WorldMock;
 import be.seeseemelk.mockbukkit.command.ConsoleCommandSenderMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMockFactory;
-import org.bukkit.Location;
 import org.bukkit.event.player.*;
 import org.junit.Before;
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 

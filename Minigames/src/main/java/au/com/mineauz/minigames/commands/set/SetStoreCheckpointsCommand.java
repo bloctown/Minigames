@@ -1,11 +1,9 @@
 package au.com.mineauz.minigames.commands.set;
 
-import java.security.MessageDigest;
 import java.util.List;
 
 import au.com.mineauz.minigames.MinigameMessageType;
 import au.com.mineauz.minigames.managers.MessageManager;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import au.com.mineauz.minigames.MinigameUtils;
