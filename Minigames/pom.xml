@@ -21,7 +21,11 @@
         <skipTests>false</skipTests>
     </properties>
     <repositories>
-        <!-- Spigot repo -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <!-- Spigot repo  -->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public</url>
@@ -33,7 +37,6 @@
         </repository>
         <!--PaperLib-->
         <repository>
-            <name>papermc</name>
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
@@ -42,13 +45,22 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <url>https://repository.apache.org/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <dependencies>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- Used for Economy interop -->
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -77,18 +89,6 @@
             <artifactId>paperlib</artifactId>
             <version>1.0.6</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>be.seeseemelk</groupId>
-            <artifactId>MockBukkit</artifactId>
-            <version>0.2.1-SNAPSHOT</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -145,7 +145,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.3.0-SNAPSHOT</version>
                 <configuration>
                     <filters>
                         <filter>
