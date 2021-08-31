@@ -3,6 +3,9 @@ package au.com.mineauz.minigames.mechanics;
 import au.com.mineauz.minigames.MinigameMessageType;
 import au.com.mineauz.minigames.objects.CTFFlag;
 import au.com.mineauz.minigames.objects.MinigamePlayer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import au.com.mineauz.minigames.MinigameUtils;
 import au.com.mineauz.minigames.events.DropFlagEvent;
 import au.com.mineauz.minigames.events.FlagCaptureEvent;
@@ -98,19 +101,19 @@ public class CTFMechanic extends GameMechanicBase {
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK && (event.getClickedBlock().getType() == Material.OAK_SIGN || event.getClickedBlock().getType() == Material.OAK_WALL_SIGN) && ply.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
                 Minigame mgm = ply.getMinigame();
                 Sign sign = (Sign) event.getClickedBlock().getState();
-                if (mgm.getMechanicName().equals("ctf") && sign.getLine(1).equals(ChatColor.GREEN + "Flag")) {
+                if (mgm.getMechanicName().equals("ctf") && sign.line(1).contains(Component.text("Flag", NamedTextColor.GREEN))) {
                     Team team = ply.getTeam();
 
                     String sloc = MinigameUtils.createLocationID(event.getClickedBlock().getLocation());
 
-                    if ((!sign.getLine(2).equalsIgnoreCase(team.getChatColor() + team.getColor().toString()) && !sign.getLine(2).equalsIgnoreCase(ChatColor.GREEN + "Capture")) ||
-                            sign.getLine(2).equalsIgnoreCase(ChatColor.GRAY + "Neutral")) {
+                    if ((!LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)).equalsIgnoreCase(team.getChatColor() + team.getColor().toString()) && !LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)).equalsIgnoreCase(ChatColor.GREEN + "Capture")) ||
+                            sign.line(2).contains(Component.text("Neutral", NamedTextColor.GRAY))) {
                         if (mgm.getFlagCarrier(ply) == null) {
                             TakeFlagEvent ev = null;
                             if (!mgm.hasDroppedFlag(sloc) &&
-                                    (TeamsModule.getMinigameModule(mgm).hasTeam(TeamColor.matchColor(ChatColor.stripColor(sign.getLine(2)))) ||
-                                            sign.getLine(2).equalsIgnoreCase(ChatColor.GRAY + "Neutral"))) {
-                                Team oTeam = TeamsModule.getMinigameModule(mgm).getTeam(TeamColor.matchColor(ChatColor.stripColor(sign.getLine(2))));
+                                    (TeamsModule.getMinigameModule(mgm).hasTeam(TeamColor.matchColor(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2))))) ||
+                                            sign.line(2).contains(Component.text("Neutral", NamedTextColor.GRAY)))) {
+                                Team oTeam = TeamsModule.getMinigameModule(mgm).getTeam(TeamColor.matchColor(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)))));
                                 CTFFlag flag = new CTFFlag(event.getClickedBlock().getLocation(), oTeam, event.getPlayer(), mgm);
                                 ev = new TakeFlagEvent(mgm, ply, flag);
                                 Bukkit.getPluginManager().callEvent(ev);
@@ -146,9 +149,9 @@ public class CTFMechanic extends GameMechanicBase {
                             }
                         }
 
-                    } else if (team == TeamsModule.getMinigameModule(mgm).getTeam(TeamColor.matchColor(ChatColor.stripColor(sign.getLine(2)))) && CTFModule.getMinigameModule(mgm).getUseFlagAsCapturePoint() ||
-                            (team == TeamsModule.getMinigameModule(mgm).getTeam(TeamColor.matchColor(ChatColor.stripColor(sign.getLine(3)))) && sign.getLine(2).equalsIgnoreCase(ChatColor.GREEN + "Capture")) ||
-                            (sign.getLine(2).equalsIgnoreCase(ChatColor.GREEN + "Capture") && sign.getLine(3).equalsIgnoreCase(ChatColor.GRAY + "Neutral"))) {
+                    } else if (team == TeamsModule.getMinigameModule(mgm).getTeam(TeamColor.matchColor(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2))))) && CTFModule.getMinigameModule(mgm).getUseFlagAsCapturePoint() ||
+                            (team == TeamsModule.getMinigameModule(mgm).getTeam(TeamColor.matchColor(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(3))))) && sign.line(2).contains(Component.text("Capture", NamedTextColor.GREEN))) ||
+                            (sign.line(2).contains(Component.text("Capture", NamedTextColor.GREEN)) && sign.line(3).contains(Component.text("Neutral", NamedTextColor.GRAY)))) {
 
                         String clickID = MinigameUtils.createLocationID(event.getClickedBlock().getLocation());
 

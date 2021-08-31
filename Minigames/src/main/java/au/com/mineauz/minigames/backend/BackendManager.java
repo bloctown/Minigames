@@ -39,8 +39,6 @@ public class BackendManager {
 
     private Backend makeBackend(String type) {
         String serverType = Bukkit.getServer().getName();
-        if (serverType.equals("ServerMock"))
-            return new TestBackEnd();
         switch (type) {
             case "sqlite":
                 return new SQLiteBackend(logger);

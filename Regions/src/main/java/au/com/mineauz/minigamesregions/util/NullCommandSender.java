@@ -13,8 +13,10 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class NullCommandSender implements ConsoleCommandSender {
     @Override
@@ -133,5 +135,23 @@ public class NullCommandSender implements ConsoleCommandSender {
 
     @Override
     public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details) {
+    }
+
+    @Override
+    public void sendMessage(@Nullable UUID arg0, @NotNull String arg1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void sendMessage(@Nullable UUID arg0, @NotNull String... arg1) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void sendRawMessage(@Nullable UUID arg0, @NotNull String arg1) {
+        // TODO Auto-generated method stub
+        
     }
 }

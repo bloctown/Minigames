@@ -2,6 +2,9 @@ package au.com.mineauz.minigames.signs;
 
 import au.com.mineauz.minigames.MinigameMessageType;
 import au.com.mineauz.minigames.objects.MinigamePlayer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import au.com.mineauz.minigames.MinigameUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,23 +41,23 @@ public class CheckpointSign implements MinigameSign {
 
     @Override
     public boolean signCreate(SignChangeEvent event) {
-        event.setLine(1, ChatColor.GREEN + "Checkpoint");
-        if (event.getLine(2).equalsIgnoreCase("global")) {
-            event.setLine(2, ChatColor.BLUE + "Global");
+        event.line(1, Component.text("Checkpoint", NamedTextColor.GREEN));
+        if (LegacyComponentSerializer.legacyAmpersand().serialize(event.line(2)).equalsIgnoreCase("global")) {
+            event.line(2, Component.text("Global", NamedTextColor.BLUE));
         }
         return true;
     }
 
     @Override
     public boolean signUse(Sign sign, MinigamePlayer player) {
-        if ((player.isInMinigame() || (!player.isInMinigame() && sign.getLine(2).equals(ChatColor.BLUE + "Global")))
-                && player.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
+        if ((player.isInMinigame()) || (!player.isInMinigame() && sign.line(2).contains(Component.text("Global", NamedTextColor.BLUE))
+                && player.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR)) {
             if (player.isInMinigame() && player.getMinigame().isSpectator(player)) {
                 return false;
             }
             if (player.getPlayer().isOnGround()) {
                 Location newloc = player.getPlayer().getLocation();
-                if (!sign.getLine(2).equals(ChatColor.BLUE + "Global")) {
+                if (!sign.line(2).contains(Component.text("Global", NamedTextColor.BLUE))) {
                     player.setCheckpoint(newloc);
                 } else {
                     player.getStoredPlayerCheckpoints().setGlobalCheckpoint(newloc);

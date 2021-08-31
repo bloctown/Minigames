@@ -27,7 +27,6 @@ import au.com.mineauz.minigames.stats.MinigameStats;
 import au.com.mineauz.minigames.stats.StatValueField;
 import au.com.mineauz.minigames.stats.StoredGameStats;
 
-import io.papermc.lib.PaperLib;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bstats.bukkit.Metrics;
@@ -253,7 +252,6 @@ public class Minigames extends JavaPlugin {
                     e.printStackTrace();
                 }
             }
-            PaperLib.suggestPaper(this);
             log().info(desc.getName() + " successfully enabled.");
             this.hookPlaceHolderApi();
         } catch (final Throwable e) {

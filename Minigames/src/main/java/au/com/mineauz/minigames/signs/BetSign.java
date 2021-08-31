@@ -2,6 +2,9 @@ package au.com.mineauz.minigames.signs;
 
 import au.com.mineauz.minigames.MinigameMessageType;
 import au.com.mineauz.minigames.objects.MinigamePlayer;
+import me.clip.placeholderapi.libs.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import au.com.mineauz.minigames.MinigameUtils;
 import au.com.mineauz.minigames.Minigames;
 import au.com.mineauz.minigames.minigame.Minigame;
@@ -42,25 +45,25 @@ public class BetSign implements MinigameSign {
 
     @Override
     public boolean signCreate(SignChangeEvent event) {
-        if (plugin.getMinigameManager().hasMinigame(event.getLine(2))) {
-            event.setLine(1, ChatColor.GREEN + "Bet");
-            event.setLine(2, plugin.getMinigameManager().getMinigame(event.getLine(2)).getName(false));
-            if (event.getLine(3).matches("[0-9]+")) {
-                event.setLine(3, "$" + event.getLine(3));
+        if (plugin.getMinigameManager().hasMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(event.line(2)))) {
+            event.line(1, Component.text("Bet", NamedTextColor.GREEN));
+            event.line(2, Component.text(plugin.getMinigameManager().getMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(event.line(2))).getName(false)));
+            if (LegacyComponentSerializer.legacyAmpersand().serialize(event.line(3)).matches("[0-9]+")) {
+                event.line(3, Component.text("$").append(event.line(3)));
             }
             return true;
         }
-        event.getPlayer().sendMessage(ChatColor.RED + "[Minigames] " + ChatColor.WHITE + MinigameUtils.formStr("minigame.error.noMinigameName", event.getLine(2)));
+        event.getPlayer().sendMessage(ChatColor.RED + "[Minigames] " + ChatColor.WHITE + MinigameUtils.formStr("minigame.error.noMinigameName", LegacyComponentSerializer.legacyAmpersand().serialize(event.line(2))));
         return false;
     }
 
     @Override
     public boolean signUse(Sign sign, MinigamePlayer player) {
-        Minigame mgm = plugin.getMinigameManager().getMinigame(sign.getLine(2));
+        Minigame mgm = plugin.getMinigameManager().getMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)));
         if (mgm != null) {
             boolean invOk = true;
             boolean fullInv;
-            boolean moneyBet = sign.getLine(3).startsWith("$");
+            boolean moneyBet = LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(3)).startsWith("$");
 
             if (plugin.getConfig().getBoolean("requireEmptyInventory")) {
                 fullInv = true;
@@ -94,12 +97,12 @@ public class BetSign implements MinigameSign {
                         return false;
                     }
 
-                    if (!sign.getLine(3).startsWith("$")) {
-                        plugin.getPlayerManager().joinMinigame(player, plugin.getMinigameManager().getMinigame(sign.getLine(2)), true, 0.0);
+                    if (!LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(3)).startsWith("$")) {
+                        plugin.getPlayerManager().joinMinigame(player, plugin.getMinigameManager().getMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2))), true, 0.0);
                     } else {
                         if (plugin.hasEconomy()) {
-                            Double bet = Double.parseDouble(sign.getLine(3).replace("$", ""));
-                            plugin.getPlayerManager().joinMinigame(player, plugin.getMinigameManager().getMinigame(sign.getLine(2)), true, bet);
+                            Double bet = Double.parseDouble(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(3)).replace("$", ""));
+                            plugin.getPlayerManager().joinMinigame(player, plugin.getMinigameManager().getMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2))), true, bet);
                             return true;
                         } else {
                             player.sendMessage(ChatColor.RED + "[Minigames] " + ChatColor.WHITE + MinigameUtils.getLang("minigame.error.noVault"), MinigameMessageType.ERROR);

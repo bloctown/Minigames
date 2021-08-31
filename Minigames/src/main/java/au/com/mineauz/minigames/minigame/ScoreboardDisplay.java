@@ -5,6 +5,10 @@ import au.com.mineauz.minigames.MinigameUtils;
 import au.com.mineauz.minigames.Minigames;
 import au.com.mineauz.minigames.menu.*;
 import au.com.mineauz.minigames.stats.*;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.FutureCallback;
@@ -201,16 +205,16 @@ public class ScoreboardDisplay {
         Preconditions.checkArgument(stats.length >= 1 && stats.length <= 2);
 
         Sign sign = (Sign) block.getState();
-        sign.setLine(0, MinigameUtils.limitIgnoreCodes(ChatColor.GREEN + String.valueOf(place) + ". " + ChatColor.BLACK + stats[0].getPlayerDisplayName(), 15));
-        sign.setLine(1, MinigameUtils.limitIgnoreCodes(ChatColor.BLUE + stat.displayValueSign(stats[0].getValue(), settings), 15));
+        sign.line(0, LegacyComponentSerializer.legacyAmpersand().deserialize(MinigameUtils.limitIgnoreCodes(ChatColor.GREEN + String.valueOf(place) + ". " + ChatColor.BLACK + stats[0].getPlayerDisplayName(), 15)));
+        sign.line(1, LegacyComponentSerializer.legacyAmpersand().deserialize(MinigameUtils.limitIgnoreCodes(ChatColor.BLUE + stat.displayValueSign(stats[0].getValue(), settings), 15)));
 
         if (stats.length == 2) {
             ++place;
-            sign.setLine(2, MinigameUtils.limitIgnoreCodes(ChatColor.GREEN + String.valueOf(place) + ". " + ChatColor.BLACK + stats[1].getPlayerDisplayName(), 15));
-            sign.setLine(3, MinigameUtils.limitIgnoreCodes(ChatColor.BLUE + stat.displayValueSign(stats[1].getValue(), settings), 15));
+            sign.line(2, LegacyComponentSerializer.legacyAmpersand().deserialize(MinigameUtils.limitIgnoreCodes(ChatColor.GREEN + String.valueOf(place) + ". " + ChatColor.BLACK + stats[1].getPlayerDisplayName(), 15)));
+            sign.line(3, LegacyComponentSerializer.legacyAmpersand().deserialize(MinigameUtils.limitIgnoreCodes(ChatColor.BLUE + stat.displayValueSign(stats[1].getValue(), settings), 15)));
         } else {
-            sign.setLine(2, "");
-            sign.setLine(3, "");
+            sign.line(2, Component.text(""));
+            sign.line(3, Component.text(""));
         }
 
         sign.update();
@@ -309,10 +313,10 @@ public class ScoreboardDisplay {
 
     private void clearSign(Block block) {
         Sign sign = (Sign) block.getState();
-        sign.setLine(0, "");
-        sign.setLine(1, "");
-        sign.setLine(2, "");
-        sign.setLine(3, "");
+        sign.line(0, Component.text(""));
+        sign.line(1, Component.text(""));
+        sign.line(2, Component.text(""));
+        sign.line(3, Component.text(""));
         sign.update();
     }
 
@@ -357,10 +361,10 @@ public class ScoreboardDisplay {
             if (state instanceof Sign) {
                 Sign sign = (Sign) state;
 
-                sign.setLine(0, ChatColor.BLUE + minigame.getName(true));
-                sign.setLine(1, ChatColor.GREEN + settings.getDisplayName());
-                sign.setLine(2, ChatColor.GREEN + field.getTitle());
-                sign.setLine(3, "(" + WordUtils.capitalize(order.toString()) + ")");
+                sign.line(0, Component.text(minigame.getName(true), NamedTextColor.BLUE));
+                sign.line(1, Component.text(settings.getDisplayName(), NamedTextColor.GREEN));
+                sign.line(2, Component.text(field.getTitle(), NamedTextColor.GREEN));
+                sign.line(3, Component.text("(" + WordUtils.capitalize(order.toString()) + ")"));
                 sign.update();
 
                 sign.setMetadata("MGScoreboardSign", new FixedMetadataValue(Minigames.getPlugin(), true));

@@ -49,10 +49,10 @@ public class RollbackScheduler implements Runnable {
                     if (bdata.getBlockState() instanceof Sign) {
                         Sign sign = (Sign) bdata.getLocation().getBlock().getState();
                         Sign signOld = (Sign) bdata.getBlockState();
-                        sign.setLine(0, signOld.getLine(0));
-                        sign.setLine(1, signOld.getLine(1));
-                        sign.setLine(2, signOld.getLine(2));
-                        sign.setLine(3, signOld.getLine(3));
+                        sign.line(0, signOld.line(0));
+                        sign.line(1, signOld.line(1));
+                        sign.line(2, signOld.line(2));
+                        sign.line(3, signOld.line(3));
                         sign.update();
                     }
                     break;

@@ -70,24 +70,6 @@
     <module>minigamesdistribution</module>
   </modules>
   <repositories>
-    <!-- Addstar repo -->
-      <repository>
-          <id>addstar-repo</id>
-          <url>https://maven.addstar.com.au/artifactory/ext-release-local</url>
-          <snapshots>
-              <enabled>false</enabled>
-          </snapshots>
-      </repository>
-      <repository>
-          <id>addstar-snapshot-repo</id>
-          <url>https://maven.addstar.com.au/artifactory/ext-snapshot-local</url>
-          <snapshots>
-              <enabled>true</enabled>
-          </snapshots>
-          <releases>
-              <enabled>false</enabled>
-          </releases>
-      </repository>
       <repository>
           <id>papermc</id>
           <url>https://papermc.io/repo/repository/maven-public/</url>
@@ -120,13 +102,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13</version>
+      <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
       <dependency>
           <groupId>org.jetbrains</groupId>
           <artifactId>annotations</artifactId>
-          <version>20.1.0</version>
+          <version>21.0.1</version>
           <scope>provided</scope>
           <!-- no runtime features are used-->
       </dependency>
@@ -152,7 +134,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
         </plugin>
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -179,7 +161,7 @@
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-dependency-plugin</artifactId>
-              <version>3.1.2</version>
+              <version>3.2.0</version>
           </plugin>
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>

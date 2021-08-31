@@ -4,6 +4,8 @@ import au.com.mineauz.minigames.MinigameUtils;
 import au.com.mineauz.minigames.Minigames;
 import au.com.mineauz.minigames.minigame.Minigame;
 import au.com.mineauz.minigames.minigame.Team;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -115,7 +117,7 @@ public class CTFFlag {
             atHome = false;
 
             for (int i = 0; i < 4; i++) {
-                sign.setLine(i, signText[i]);
+                sign.line(i, Component.text(signText[i]));
             }
             sign.update();
             currentLocation = newLocation.clone();
@@ -152,7 +154,7 @@ public class CTFFlag {
         Sign sign = (Sign) spawnLocation.getBlock().getState();
 
         for (int i = 0; i < 4; i++) {
-            sign.setLine(i, signText[i]);
+            sign.line(i, Component.text(signText[i]));
         }
         sign.update();
     }

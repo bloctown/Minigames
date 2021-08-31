@@ -17,6 +17,7 @@ import au.com.mineauz.minigames.objects.MinigamePlayer;
 import au.com.mineauz.minigames.objects.OfflineMinigamePlayer;
 import au.com.mineauz.minigames.tool.MinigameTool;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import org.bukkit.Bukkit;
@@ -276,9 +277,9 @@ public class Events implements Listener {
             Block cblock = event.getClickedBlock();
             if (cblock.getState() instanceof Sign && !event.isCancelled()) {
                 Sign sign = (Sign) cblock.getState();
-                if (sign.getLine(0).equalsIgnoreCase(ChatColor.DARK_BLUE + "[Minigame]")) {
-                    if ((sign.getLine(1).equalsIgnoreCase(ChatColor.GREEN + "Join") || sign.getLine(1).equalsIgnoreCase(ChatColor.GREEN + "Bet")) && !ply.isInMinigame()) {
-                        Minigame mgm = mdata.getMinigame(sign.getLine(2));
+                if (LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(0)).equalsIgnoreCase(ChatColor.DARK_BLUE + "[Minigame]")) {
+                    if ((LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(1)).equalsIgnoreCase(ChatColor.GREEN + "Join") || sign.line(1).contains(Component.text("Bet", NamedTextColor.GREEN)) && !ply.isInMinigame())) {
+                        Minigame mgm = mdata.getMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)));
                         if (mgm != null && (!mgm.getUsePermissions() || event.getPlayer().hasPermission("minigame.join." + mgm.getName(false).toLowerCase()))) {
                             if (!mgm.isEnabled()) {
                                 event.getPlayer().sendMessage(ChatColor.AQUA + "[Minigames] " + ChatColor.WHITE + MinigameUtils.getLang("minigame.error.notEnabled"));
@@ -365,8 +366,8 @@ public class Events implements Listener {
                 event.setCancelled(true);
             } else if (event.getClickedBlock() != null && (event.getClickedBlock().getType() == Material.OAK_WALL_SIGN || event.getClickedBlock().getType() == Material.OAK_SIGN)) {
                 Sign sign = (Sign) event.getClickedBlock().getState();
-                if (ChatColor.stripColor(sign.getLine(0)).equalsIgnoreCase("[Minigame]") && ChatColor.stripColor(sign.getLine(1)).equalsIgnoreCase("Join")) {
-                    Minigame minigame = mdata.getMinigame(sign.getLine(2));
+                if (ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(0))).equalsIgnoreCase("[Minigame]") && ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(1))).equalsIgnoreCase("Join")) {
+                    Minigame minigame = mdata.getMinigame(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)));
                     tool.setMinigame(minigame);
                     ply.sendInfoMessage("Tools Minigame has been set to " + minigame);
                     event.setCancelled(true);
