@@ -2,6 +2,10 @@ package au.com.mineauz.minigames.signs;
 
 import au.com.mineauz.minigames.MinigameMessageType;
 import au.com.mineauz.minigames.Minigames;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,11 +53,11 @@ public class SignBase implements Listener {
     private void signPlace(SignChangeEvent event) {
         String[] signinfo = new String[4];
         for (int i = 0; i < 4; i++) {
-            signinfo[i] = ChatColor.stripColor(event.getLine(i));
+            signinfo[i] = ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(event.line(i)));
         }
         if ("[minigame]".equalsIgnoreCase(signinfo[0]) || "[mgm]".equalsIgnoreCase(signinfo[0]) || "[mg]".equals(signinfo[0])) {
             if (minigameSigns.containsKey(signinfo[1].toLowerCase())) {
-                event.setLine(0, ChatColor.DARK_BLUE + "[Minigame]");
+                event.line(0, Component.text("[Minigame]", NamedTextColor.DARK_BLUE));
                 MinigameSign mgSign = minigameSigns.get(signinfo[1].toLowerCase());
 
                 if (mgSign.getCreatePermission() != null && !event.getPlayer().hasPermission(mgSign.getCreatePermission())) {
@@ -82,9 +86,9 @@ public class SignBase implements Listener {
             Block cblock = event.getClickedBlock();
             if (cblock.getState() instanceof Sign) {
                 Sign sign = (Sign) cblock.getState();
-                if (sign.getLine(0).equals(ChatColor.DARK_BLUE + "[Minigame]") &&
-                        minigameSigns.containsKey(ChatColor.stripColor(sign.getLine(1).toLowerCase()))) {
-                    MinigameSign mgSign = minigameSigns.get(ChatColor.stripColor(sign.getLine(1).toLowerCase()));
+                if (LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(0)).equals(LegacyComponentSerializer.legacyAmpersand().serialize(Component.text("[Minigame]", NamedTextColor.DARK_BLUE))) &&
+                        minigameSigns.containsKey(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(1)).toLowerCase()))) {
+                    MinigameSign mgSign = minigameSigns.get(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(1)).toLowerCase()));
 
                     if (mgSign.getUsePermission() != null && !event.getPlayer().hasPermission(mgSign.getUsePermission())) {
                         event.setCancelled(true);
@@ -104,9 +108,9 @@ public class SignBase implements Listener {
     private void signBreak(BlockBreakEvent event) {
         if (event.getBlock().getType() == Material.OAK_SIGN || event.getBlock().getType() == Material.OAK_WALL_SIGN) {
             Sign sign = (Sign) event.getBlock().getState();
-            if (sign.getLine(0).equals(ChatColor.DARK_BLUE + "[Minigame]") &&
-                    minigameSigns.containsKey(ChatColor.stripColor(sign.getLine(1).toLowerCase()))) {
-                MinigameSign mgSign = minigameSigns.get(ChatColor.stripColor(sign.getLine(1).toLowerCase()));
+            if (sign.line(0).contains(Component.text("[Minigame]", NamedTextColor.DARK_BLUE)) &&
+                    minigameSigns.containsKey(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(1)).toLowerCase()))) {
+                MinigameSign mgSign = minigameSigns.get(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(1)).toLowerCase()));
 
                 if (mgSign.getCreatePermission() != null && !event.getPlayer().hasPermission(mgSign.getCreatePermission())) {
                     event.setCancelled(true);

@@ -38,16 +38,20 @@
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <!-- Addstar repos -->
-            <repository>
-                <id>placeholderapi</id>
-                <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-            </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <!-- Used for Economy interop -->
         <dependency>
-            <groupId>net.milkbowl.vault</groupId>
+            <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <exclusions>
@@ -71,7 +75,7 @@
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -98,12 +102,12 @@
             <version>3.25.2</version>
             <scope>provided</scope>
         </dependency>
-            <dependency>
-                <groupId>me.clip</groupId>
-                <artifactId>placeholderapi</artifactId>
-                <version>2.10.9</version>
-                <scope>provided</scope>
-            </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.10.10</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.kitteh</groupId>
             <artifactId>paste-gg-api</artifactId>

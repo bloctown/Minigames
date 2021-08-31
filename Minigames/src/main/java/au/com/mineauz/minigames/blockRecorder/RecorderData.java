@@ -599,6 +599,8 @@ public class RecorderData implements Listener {
                             item = new ItemStack(Material.getMaterial(iargs.get("item")),
                                     Integer.parseInt(iargs.get("c")), Short.parseShort(iargs.get("dur")));
 
+                            
+
                             if (iargs.containsKey("enc")) {
                                 for (String s : iargs.get("enc").split("\\]\\[")) {
                                     item.addUnsafeEnchantment(Enchantment.getByName(s.split(",")[0].replace("[", "")),

@@ -2,6 +2,9 @@ package au.com.mineauz.minigames.signs;
 
 import au.com.mineauz.minigames.MinigameMessageType;
 import au.com.mineauz.minigames.objects.MinigamePlayer;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import au.com.mineauz.minigames.MinigameUtils;
 import au.com.mineauz.minigames.Minigames;
 import au.com.mineauz.minigames.minigame.Minigame;
@@ -44,13 +47,13 @@ public class ScoreSign implements MinigameSign {
 
     @Override
     public boolean signCreate(SignChangeEvent event) {
-        if (event.getLine(2).matches("[0-9]+")) {
-            event.setLine(1, ChatColor.GREEN + "Score");
-            if (TeamColor.matchColor(event.getLine(3)) != null) {
-                TeamColor col = TeamColor.matchColor(event.getLine(3));
-                event.setLine(3, col.getColor() + MinigameUtils.capitalize(col.toString()));
+        if (LegacyComponentSerializer.legacyAmpersand().serialize(event.line(2)).matches("[0-9]+")) {
+            event.line(1, Component.text("Score", NamedTextColor.GREEN));
+            if (TeamColor.matchColor(LegacyComponentSerializer.legacyAmpersand().serialize(event.line(3))) != null) {
+                TeamColor col = TeamColor.matchColor(LegacyComponentSerializer.legacyAmpersand().serialize(event.line(3)));
+                event.line(3, LegacyComponentSerializer.legacyAmpersand().deserialize(col.getColor() + MinigameUtils.capitalize(col.toString())));
             } else
-                event.setLine(3, "");
+                event.line(3, Component.text(""));
             return true;
         }
         return false;
@@ -60,7 +63,7 @@ public class ScoreSign implements MinigameSign {
     public boolean signUse(Sign sign, MinigamePlayer player) {
         if (player.isInMinigame() && player.getPlayer().isOnGround()) {
             Minigame mg = player.getMinigame();
-            int score = Integer.parseInt(sign.getLine(2));
+            int score = Integer.parseInt(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(2)));
             if (!mg.isTeamGame()) {
                 if (player.hasClaimedScore(sign.getLocation())) {
                     player.sendMessage(MinigameUtils.getLang("sign.score.alreadyUsed"), MinigameMessageType.ERROR);
@@ -74,7 +77,7 @@ public class ScoreSign implements MinigameSign {
                 }
                 player.addClaimedScore(sign.getLocation());
             } else {
-                TeamColor steam = TeamColor.matchColor(ChatColor.stripColor(sign.getLine(3)));
+                TeamColor steam = TeamColor.matchColor(ChatColor.stripColor(LegacyComponentSerializer.legacyAmpersand().serialize(sign.line(3))));
                 Team pteam = player.getTeam();
                 if (steam == null || !TeamsModule.getMinigameModule(mg).hasTeam(steam) || pteam.getColor() == steam) {
                     if (Minigames.getPlugin().getMinigameManager().hasClaimedScore(mg, sign.getLocation(), 0)) {

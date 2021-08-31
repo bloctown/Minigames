@@ -195,12 +195,8 @@ public class MessageManager {
     }
 
     private static void sendMessage(CommandSender target, BaseComponent... message) {
-        if (PaperLib.isPaper()) {
-            target.sendMessage(message);
-            return;
-        }
-        target.spigot().sendMessage(message);
-
+        target.sendMessage(message);
+        return;
     }
 
     /**
