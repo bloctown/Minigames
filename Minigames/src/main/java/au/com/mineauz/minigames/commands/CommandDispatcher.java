@@ -233,7 +233,7 @@ public class CommandDispatcher implements CommandExecutor, TabCompleter {
                 }
             }
         } else {
-            sender.sendMessage(ChatColor.GREEN + "Minigames");
+            sender.sendMessage(ChatColor.GREEN + "BlocGames");
             sender.sendMessage(ChatColor.GRAY + "By: " + plugin.getDescription().getAuthors().get(0));
             sender.sendMessage(ChatColor.GRAY + "Version: " + plugin.getDescription().getVersion());
             sender.sendMessage(ChatColor.GRAY + "Type /minigame help for help");
